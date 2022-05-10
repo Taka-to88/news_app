@@ -8,7 +8,7 @@ class News(models.Model):
     title = models.CharField(max_length=100)
     link = models.URLField(null=True)
     published = models.DateTimeField()
-    image = models.ImageField(upload_to='media/')
+    image = models.ImageField(upload_to='media/', null=True)
     body = models.TextField()
 
     def __str__(self):
