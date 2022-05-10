@@ -22,6 +22,5 @@ from news import views
 
 urlpatterns = [
     path('', include('news.urls')),
-    path('news/<int:post_id>/', views.news_detail, name="news_detail"),
     path('admin/', admin.site.urls)
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

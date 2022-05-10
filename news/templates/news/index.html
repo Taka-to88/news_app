@@ -70,14 +70,19 @@
                 <div class="card mb-4" style="max-width: 1080px;">
                     <div class="row g-0">
                         <div class="col-md-4">
-                            <img src="{{ news.image.url }}" class="img-fluid rounded mx-auto"
-                                style="max-height: 150px" />
+                            {% if news.image %}
+                            <a href="{{ news.link }}"><img src="{{ news.image.url }}" class="img-fluid rounded mx-auto"
+                                    style="max-height: 150px" /></a>
+                            {% else %}
+                            <a href="{{ news.link }}"><img src="{% static 'news/no_image.png' %}"
+                                    class="img-fluid rounded mx-auto" style="max-height: 150px" /></a>
+                            {% endif %}
                         </div>
                         <div class="col-md-8">
                             <div class="card-body">
                                 <h5 class="card-title">{{ news.title }}</h5>
                                 <p class="card-text">{{ news.summary }}</p>
-                                <a href="{% url 'news_detail' news.id %}" class="btn btn-outline-secondary">続きを読む</a>
+                                <a href="{{ news.link }}" class="btn btn-outline-secondary">続きを読む</a>
                                 <p class="card-text"><small class="text-muted">{{ news.published }}</small></p>
                             </div>
                         </div>
