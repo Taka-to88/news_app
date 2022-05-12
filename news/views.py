@@ -1,5 +1,4 @@
 from django.shortcuts import render, get_object_or_404
-from prometheus_client import Summary
 from .models import News
 
 
