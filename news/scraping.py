@@ -10,6 +10,10 @@ from datetime import datetime as dt
 from django.utils.timezone import make_aware
 from django.core.files.base import ContentFile
 
+from urllib import request
+
+from urllib.parse import urlparse
+
 # 検索ワードのURL特定(本日)
 
 
@@ -37,18 +41,21 @@ def get_news():
         # 画像リンクの取得
         img_link = news_soup.find(class_=re.compile("wp"))
         img_url = "https://www.yomiuri.co.jp" + img_link.find('img').get("src")
-
         response = requests.get(img_url)
+        # result = request.urlretrieve(img_url)
         news_img = ContentFile(response.content)
+
+        img_name = urlparse(img_url).path.split('/')[-1]
+        # file_name = 'img/{}'.format(urlparse(url).path.split('/')[-1])
 
         # print(news_soup.title.text)
         news_title = news_soup.title.text
         # print(news_soup.time.text)
         newstime = news_soup.time.text
         # datetime型へ変換
-        news_time = dt.strptime(newstime, '%Y/%m/%d %H:%M')
+        naive_time = dt.strptime(newstime, '%Y/%m/%d %H:%M')
         # 取得時間をnaiveからawareへ変換
-        aware_time = make_aware(news_time)
+        aware_time = make_aware(naive_time)
 
         # class属性の値は、サイトを確認して最新の値を設定する必要があります
         detail_text = news_soup.find(class_=re.compile("p-main-contents"))
@@ -61,12 +68,14 @@ def get_news():
 
         News.objects.create(title=news_title, link=news_link,
                             published=aware_time, image=news_img, body=news_text)
+        # image.image.create(img_name, ContentFile(
+        #     response.content, img_name), save=True)
 
 
 def start():
-    scheduler = BackgroundScheduler()
+    scheduler = BackgroundScheduler(timezone='Asia/Tokyo')
     scheduler.add_job(get_news, 'cron',
-                      hour=15, minute=16)  # 毎日23時55分に実行
+                      hour=10, minute=18)  # 毎日23時55分に実行
 
     scheduler.start()
 
