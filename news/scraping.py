@@ -40,7 +40,11 @@ def get_news():
 
         # 画像リンクの取得
         img_link = news_soup.find(class_=re.compile("wp"))
-        img_url = "https://www.yomiuri.co.jp" + img_link.find('img').get("src")
+        try:
+            img_url = "https://www.yomiuri.co.jp" + \
+                img_link.find('img').get("src")
+        except AttributeError:
+            img_url = "https://www.yomiuri.co.jp/sports/mlb/20220515-OYT1T50111/"
         response = requests.get(img_url)
         # result = request.urlretrieve(img_url)
         news_img = ContentFile(response.content)
