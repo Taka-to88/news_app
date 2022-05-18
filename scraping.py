@@ -41,8 +41,7 @@ def get_news():
         # 画像リンクの取得
         img_link = news_soup.find(class_=re.compile("wp"))
         try:
-            img_url = "https://www.yomiuri.co.jp" + \
-                img_link.find('img').get("src")
+            img_url = "https://www.yomiuri.co.jp" + img_link.find('img').get("src")
         except AttributeError:
             img_url = "https://www.yomiuri.co.jp/sports/mlb/20220515-OYT1T50111/"
         response = requests.get(img_url)
@@ -79,7 +78,7 @@ def get_news():
 def start():
     scheduler = BackgroundScheduler(timezone='Asia/Tokyo')
     scheduler.add_job(get_news, 'cron',
-                      hour=10, minute=18)  # 毎日23時55分に実行
+                      hour=16, minute=32)  # 毎日23時55分に実行
 
     scheduler.start()
 
