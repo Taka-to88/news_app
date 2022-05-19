@@ -79,7 +79,7 @@ def get_news():
 def start():
     scheduler = BackgroundScheduler(timezone='Asia/Tokyo')
     scheduler.add_job(get_news, 'cron',
-                      hour=10, minute=18)  # 毎日23時55分に実行
+                      hour=11, minute=15)  # 毎日23時55分に実行
 
     scheduler.start()
 
