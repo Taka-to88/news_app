@@ -14,7 +14,7 @@
     </head>
 
     <body>
-        <div class="container" style="margin-bottom: 150px;">
+        <div class="container">
             <div class="row">
                 {% load static %}
                 <img src="{% static 'news/hedder.png' %}" class="img-fluid mx-auto"
@@ -71,10 +71,10 @@
                     <div class="row g-0">
                         <div class="col-md-4">
                             {% if page.image %}
-                            <a href="{{ news.link }}"><img src="{{ news.image.url }}" class="img-fluid rounded mx-auto"
+                            <a href="{{ page.link }}"><img src="{{ page.image.url }}" class="img-fluid rounded mx-auto"
                                     style="max-height: 150px" /></a>
                             {% else %}
-                            <a href="{{ news.link }}"><img src="{% static 'news/no_image.png' %}"
+                            <a href="{{ page.link }}"><img src="{% static 'news/no_image.png' %}"
                                     class="img-fluid rounded mx-auto" style="max-height: 150px" /></a>
                             {% endif %}
                         </div>
@@ -82,7 +82,7 @@
                             <div class="card-body">
                                 <h5 class="card-title">{{ page.title }}</h5>
                                 <p class="card-text">{{ page.summary }}</p>
-                                <a href="{{ news.link }}" class="btn btn-outline-secondary">続きを読む</a>
+                                <a href="{{ page.link }}" class="btn btn-outline-secondary">続きを読む</a>
                                 <p class="card-text"><small class="text-muted">{{ page.published }}</small></p>
                             </div>
                         </div>
@@ -126,11 +126,11 @@
             </div>
         </div>
         <!-- フッター -->
-        <footer class="bg-light text-center fixed-bottom">
+        <footer class="bg-light text-center ">
             <!-- Grid container -->
             <div class="container p-4 pb-0">
                 <!-- Section: Form -->
-                <section class="newsletter">
+                <section class="newsletter" style="margin-bottom: 50px;">
                     <form action="">
                         <!--Grid row-->
                         <div class="row d-flex justify-content-center">
@@ -169,7 +169,7 @@
             <!-- Grid container -->
 
             <!-- Copyright -->
-            <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+            <div class="text-center p-3 fixed-bottom" style="background-color: rgba(0, 0, 0, 0.2);">
                 © 2022 Copyright:
                 <a class="text-dark" href="https://limedesignlab.com/">LimeDesignLab</a>
             </div>
