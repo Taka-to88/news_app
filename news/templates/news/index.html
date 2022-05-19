@@ -66,11 +66,11 @@
                 <h1>"Welcome To OHTANI News!!"</h1>
 
                 <h4>記事一覧</h4>
-                {% for news in news.all %}
+                {% for page in pages %}
                 <div class="card mb-4" style="max-width: 1080px;">
                     <div class="row g-0">
                         <div class="col-md-4">
-                            {% if news.image %}
+                            {% if page.image %}
                             <a href="{{ news.link }}"><img src="{{ news.image.url }}" class="img-fluid rounded mx-auto"
                                     style="max-height: 150px" /></a>
                             {% else %}
@@ -80,15 +80,49 @@
                         </div>
                         <div class="col-md-8">
                             <div class="card-body">
-                                <h5 class="card-title">{{ news.title }}</h5>
-                                <p class="card-text">{{ news.summary }}</p>
+                                <h5 class="card-title">{{ page.title }}</h5>
+                                <p class="card-text">{{ page.summary }}</p>
                                 <a href="{{ news.link }}" class="btn btn-outline-secondary">続きを読む</a>
-                                <p class="card-text"><small class="text-muted">{{ news.published }}</small></p>
+                                <p class="card-text"><small class="text-muted">{{ page.published }}</small></p>
                             </div>
                         </div>
                     </div>
                 </div>
                 {% endfor %}
+                {% if pages.has_other_pages %}
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        {% if pages.has_previous %}
+                        <li><a class="page-link text-primary d-inline-block"
+                                href="?page={{ pages.previous_page_number }}">
+                                <<</a> </li> {% else %} <li class="disabled">
+                                    <div class="page-link text-secondary d-inline-block disabled" href="#">
+                                        <<</div> </li> {% endif %} {% for page_num in pages.paginator.page_range %}
+                                            {% if page_num %} {% if page_num == pages.number %} <li class="disabled">
+                                            <div class="page-link text-secondary d-inline-block disabled" href="#">
+                                                {{ page_num }}</div>
+                        </li>
+                        {% else %}
+                        <li><a class="page-link text-primary d-inline-block"
+                                href="?page={{ page_num }}">{{ page_num }}</a></li>
+                        {% endif %}
+                        {% else %}
+                        <li class="disabled"><a class="page-link text-secondary d-inline-block text-muted"
+                                href="#">・・・</a></li>
+                        {% endif %}
+                        {% endfor %}
+
+                        {% if pages.has_next %}
+                        <li><a class="page-link text-primary d-inline-block"
+                                href="?page={{ pages.next_page_number }}">>></a></li>
+                        {% else %}
+                        <li class="disabled">
+                            <div class="page-link text-secondary d-inline-block disabled" href="#">>></div>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+                {% endif %}
 
                 <!-- Optional JavaScript; choose one of the two! -->
                 <!-- Option 1: Bootstrap Bundle with Popper -->
@@ -108,7 +142,7 @@
             </div>
         </div>
         <!-- フッター -->
-        <footer class="bg-light text-center fixed-bottom">
+        <footer class="bg-light text-center">
             <!-- Grid container -->
             <div class="container p-4 pb-0">
                 <!-- Section: Form -->
@@ -153,7 +187,7 @@
             <!-- Copyright -->
             <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
                 © 2022 Copyright:
-                <a class="text-dark" href="https://limrdesignlab.com/">LimeDesignLab</a>
+                <a class="text-dark" href="https://limedesignlab.com/">LimeDesignLab</a>
             </div>
             <!-- Copyright -->
         </footer>
